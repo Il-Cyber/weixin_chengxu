@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#8E1616">
+<title>青春诗会 · 诗歌接龙</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- 顶部横幅 -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-flag">✦ 团日活动 · 诗歌接龙 ✦</div>
+    <h1 class="hero-title">青春诗会</h1>
+    <p class="hero-sub">以诗传情 · 以字接力 · 共书篇章</p>
+    <div class="hero-line"></div>
+  </div>
+</header>
+
+<!-- 主内容 -->
+<main class="wrap">
+
+  <!-- 你的颜色提示 -->
+  <section class="card color-card">
+    <div class="color-dot" id="myColorDot"></div>
+    <div class="color-info">
+      <div class="color-label">本次你的接龙颜色</div>
+      <div class="color-name" id="myColorName">—</div>
+    </div>
+    <div class="color-tip">每次进入自动更换，他人不可见</div>
+  </section>
+
+  <!-- 接龙列表 -->
+  <section class="card">
+    <div class="section-head">
+      <h2>接龙诗篇</h2>
+      <span class="count-badge" id="countBadge">0 句</span>
+    </div>
+    <ul class="poem-list" id="poemList"></ul>
+    <div class="empty" id="emptyTip" style="display:none;">还没有诗句，快来开个头吧 ✍️</div>
+  </section>
+
+  <!-- 创作区 -->
+  <section class="card composer">
+    <div class="section-head"><h2>续写你的诗</h2></div>
+    <div class="field">
+      <label for="nick">你的昵称</label>
+      <input id="nick" type="text" maxlength="8" placeholder="匿名同学" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="line">你的诗句（多句请按回车分行）</label>
+      <textarea id="line" rows="4" maxlength="150" placeholder="写下与上一句衔接的诗句…&#10;多句请按回车分行，如：&#10;晨光落在肩头，&#10;脚步踏向远方。"></textarea>
+    </div>
+    <button id="submitBtn" class="submit-btn" type="button">提交接龙</button>
+    <p class="hint">提交后将即时展示，颜色即为你的专属色 · 提交前自动进行内容审查</p>
+  </section>
+
+  <!-- 注意事项 -->
+  <section class="card notes">
+    <div class="section-head"><h2>注意事项</h2></div>
+    <ul class="notes-list">
+      <li>请与上一句衔接，尽量保持诗意连贯、朗朗上口。</li>
+      <li>内容积极向上、贴合活动主题，倡导青春奋斗与家国情怀。</li>
+      <li>文明用语，不使用不当、特殊或敏感词汇，不发表不当言论。</li>
+      <li>提交诗句前将自动进行内容审查，命中不当词汇会被拦截。</li>
+      <li>每人可多次接龙，注意与整体篇章协调，避免重复堆叠。</li>
+      <li>提交即实时展示，刷新页面可查看最新篇章。</li>
+      <li>你可以删除自己发表的诗句，但无法删除他人的诗句。</li>
+      <li>如需删除他人内容，请联系管理员处理。</li>
+      <li>如遇任何问题，请及时联系活动组织者。</li>
+    </ul>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="admin-zone">
+      <button id="adminToggle" class="admin-toggle" type="button">管理员入口</button>
+      <div id="adminPanel" class="admin-panel" style="display:none;">
+        <input id="adminCode" type="password" placeholder="输入管理员口令" maxlength="20" autocomplete="off">
+        <button id="adminOk" type="button">确认</button>
+        <span id="adminState" class="admin-state"></span>
+      </div>
+    </div>
+    <div class="footer-text">青春诗会 · 诗歌接龙　|　仅供活动使用</div>
+  </footer>
+</main>
+
+<script src="js/app.js"></script>
+</body>
+</html>
