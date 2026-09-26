@@ -1,9 +1,0 @@
-{
-  "name": "getColor",
-  "version": "1.0.0",
-  "description": "每次进入随机分配接龙颜色",
-  "main": "index.js",
-  "dependencies": {
-    "wx-server-sdk": "~2.6.3"
-  }
-}
