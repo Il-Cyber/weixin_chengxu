@@ -247,6 +247,16 @@ html, body {
   text-align: center;
   margin-top: 10px;
 }
+.cloud-status {
+  font-size: 11.5px;
+  color: var(--red-main);
+  background: #FBEBEB;
+  border: 1px solid #F0D5D5;
+  border-radius: 20px;
+  padding: 3px 12px;
+  display: inline-block;
+  margin-top: 8px;
+}
 
 /* ===== 注意事项 ===== */
 .notes {
