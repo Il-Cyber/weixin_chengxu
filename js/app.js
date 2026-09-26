@@ -1,11 +1,11 @@
 /* ===== 青春诗会 · 诗歌接龙 网页样本（云端同步版） =====
- * 数据层：默认使用 LeanCloud 免费云数据库（见 config.js，填好 appId 即开启云端同步）；
+ * 数据层：默认使用腾讯云开发 CloudBase（见 config.js，填好 envId 即开启云端同步）；
  *         未配置时自动回退到浏览器 localStorage（仅本机可见）。
  */
 
-// 云配置（config.js 引入的 window.LEAN_CONFIG）
-var CFG = (typeof window !== 'undefined' && window.LEAN_CONFIG) ? window.LEAN_CONFIG : {};
-var IS_CLOUD = !!(CFG.appId && typeof AV !== 'undefined');
+// 云配置（config.js 引入的 window.TCB_CONFIG）
+var CFG = (typeof window !== 'undefined' && window.TCB_CONFIG) ? window.TCB_CONFIG : {};
+var IS_CLOUD = !!(CFG.envId && typeof cloudbase !== 'undefined');
 
 // 预设色板：均为高饱和、易读色，避免白色与灰色
 var PALETTE = [
@@ -80,48 +80,57 @@ function pickColor() {
 
 /* ==================== 数据层（云端 / 本地 双实现） ==================== */
 
-/* --- 云端（LeanCloud） --- */
+/* --- 云端（腾讯云开发 CloudBase） --- */
+var tcbApp = null;
 var Cloud = {
-  ensureInit: function () {
-    if (!AV._initialized) {
-      var opt = { appId: CFG.appId, appKey: CFG.appKey };
-      if (CFG.serverURL) opt.serverURL = CFG.serverURL;
-      AV.init(opt);
-      AV._initialized = true;
+  ensureReady: async function () {
+    if (!tcbApp) {
+      tcbApp = cloudbase.init({ env: CFG.envId, region: CFG.region || 'ap-shanghai' });
     }
+    // 匿名登录，以便读写云数据库
+    var auth = tcbApp.auth({ persistence: 'local' });
+    var state = await auth.getLoginState();
+    if (!state) {
+      await auth.signInAnonymously();
+    }
+    return tcbApp;
   },
   load: async function () {
-    this.ensureInit();
-    var q = new AV.Query('Poem');
-    q.ascending('createdAt');
-    q.limit(100);
-    var recs = await q.find();
-    return recs.map(function (r) {
+    var app = await this.ensureReady();
+    var db = app.database();
+    var res = await db.collection('poems')
+      .orderBy('createTime', 'asc')
+      .limit(100)
+      .get();
+    return (res.data || []).map(function (r) {
       return {
-        id: r.id,
-        text: r.get('text'),
-        author: r.get('author'),
-        color: r.get('color'),
-        ownerKey: r.get('ownerKey'),
-        time: fmtTime(r.createdAt)
+        id: r._id,
+        text: r.text,
+        author: r.author,
+        color: r.color,
+        ownerKey: r.ownerKey,
+        time: r.createTime ? fmtTime(new Date(r.createTime)) : ''
       };
     });
   },
   add: async function (data) {
-    this.ensureInit();
-    var p = new AV.Object('Poem');
-    p.set('text', data.text);
-    p.set('author', data.author);
-    p.set('color', data.color);
-    p.set('ownerKey', data.ownerKey);
-    var saved = await p.save();
-    return { id: saved.id, time: fmtTime(saved.createdAt) };
+    var app = await this.ensureReady();
+    var db = app.database();
+    var res = await db.collection('poems').add({
+      data: {
+        text: data.text,
+        author: data.author,
+        color: data.color,
+        ownerKey: data.ownerKey,
+        createTime: db.serverDate()
+      }
+    });
+    return { id: res.id };
   },
   remove: async function (id) {
-    this.ensureInit();
-    var q = new AV.Query('Poem');
-    var rec = await q.get(id);
-    await rec.destroy();
+    var app = await this.ensureReady();
+    var db = app.database();
+    await db.collection('poems').doc(id).remove();
   }
 };
 
