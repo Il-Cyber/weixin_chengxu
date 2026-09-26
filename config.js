@@ -1,17 +1,14 @@
-/* ===== LeanCloud 免费云数据库配置 =====
- * 1) 注册：https://console.leancloud.cn（免费开发版即可，无需付费）
- * 2) 创建应用 → 进入应用 → 「设置 / 设置」→「应用凭证」
- * 3) 把下面三项复制粘贴进来即可：
- *    - AppID   （形如 xxxxxxxxxxxxxxxxxxxxxx）
- *    - AppKey  （形如 xxxxxxxxxxxxxxxxxxxxxx）
- *    - Server 域名（国内版形如 https://xxxx.api.lc-cn-xxxx.shared.leancloud.cn，
- *                  在“设置→应用凭证→Server 域名”里可复制）
+/* ===== 腾讯云开发 CloudBase 配置 =====
+ * 1) 打开 https://cloud.tencent.com/product/tcb 开通云开发（有免费额度）
+ *    （如果你已在微信开发者工具开通了云开发，同一环境在腾讯云控制台也能看到）
+ * 2) 进入你的「云开发环境」→ 复制「环境 ID」（形如 your-env-id-xxxxx）
+ * 3) 在环境里开启「Web 端访问」并配置「安全域名」（详见 README）
+ * 4) 把下面 envId 填进去即可。
  *
- * 说明：留空 appId 时，网页仍会以“本地存储”模式运行（仅本机可见，不跨设备同步）。
- * 填好 appId 后即自动切换到云端，浏览器与微信打开的数据实时同步。
+ * 说明：envId 留空时，网页以“本地存储”模式运行（仅本机可见）；
+ *       填好后自动切换到云端，浏览器与微信打开的数据实时同步。
  */
-window.LEAN_CONFIG = {
-  appId: '',
-  appKey: '',
-  serverURL: ''
+window.TCB_CONFIG = {
+  envId: '',       // ← 填你的云开发环境 ID
+  region: 'ap-shanghai' // ← 你的环境所在区域（腾讯云控制台可见，通常 ap-shanghai / ap-guangzhou）
 };
