@@ -91,7 +91,7 @@ var Cloud = {
     var auth = tcbApp.auth({ persistence: 'local' });
     var state = await auth.getLoginState();
     if (!state) {
-      await auth.signInAnonymously();
+      await auth.anonymousAuthProvider().signIn();
     }
     return tcbApp;
   },
