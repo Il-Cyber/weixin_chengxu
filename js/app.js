@@ -83,15 +83,16 @@ function pickColor() {
 /* --- 云端（腾讯云开发 CloudBase） --- */
 var tcbApp = null;
 var Cloud = {
+  _auth: null,
   ensureReady: async function () {
     if (!tcbApp) {
       tcbApp = cloudbase.init({ env: CFG.envId, region: CFG.region || 'ap-shanghai' });
+      this._auth = tcbApp.auth({ persistence: 'local' });
     }
-    // 匿名登录，以便读写云数据库
-    var auth = tcbApp.auth({ persistence: 'local' });
-    var state = await auth.getLoginState();
+    // 匿名登录（auth 单例，避免重复创建），以便读写云数据库
+    var state = await this._auth.getLoginState();
     if (!state) {
-      await auth.anonymousAuthProvider().signIn();
+      await this._auth.anonymousAuthProvider().signIn();
     }
     return tcbApp;
   },
