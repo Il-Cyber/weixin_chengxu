@@ -275,7 +275,7 @@ html, body {
   color: #4B3A2A;
 }
 .notes-list li::before {
-  content: "✦";
+  content: "\2726";
   position: absolute;
   left: 0;
   color: var(--red-bright);

@@ -1,4 +1,4 @@
-/* ===== 青春诗会 · 诗歌接龙 网页样本（云端同步版） =====
+/* ===== 芯信诗笺 · 诗歌接龙 网页样本（云端同步版） =====
  * 数据层：默认使用腾讯云开发 CloudBase（见 config.js，填好 envId 即开启云端同步）；
  *         未配置时自动回退到浏览器 localStorage（仅本机可见）。
  */
@@ -28,7 +28,7 @@ var IDSEQ = "poems_id_seq_v1";
 var LASTCOLOR = "poems_last_color_v1";
 var UIDKEY = "poems_uid_v1";
 var ADMINKEY = "poems_is_admin_v1";
-var ADMIN_CODE = "2026"; // 管理员口令，可按需修改
+var ADMIN_CODE = "xinxin2026"; // 管理员口令，可按需修改
 
 /* ---------- 敏感词库（可按需增删） ---------- */
 var SENSITIVE_WORDS = [
@@ -230,7 +230,7 @@ function render() {
       del.className = "poem-del";
       del.type = "button";
       del.title = "删除这句";
-      del.textContent = "✕";
+      del.textContent = "\u2715";
       del.setAttribute("data-id", item.id);
       del.addEventListener("click", function () {
         if (confirm("确定删除这句诗吗？")) {
